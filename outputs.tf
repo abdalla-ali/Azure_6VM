@@ -13,5 +13,5 @@ output "subnet_id" {
 # Output the Network Interface IDs
 output "network_interface_ids" {
   description = "List of network interface IDs"
-  value = module.network_interface.network_interface_ids
+  value = [for ni in module.network_interface : ni.network_interface_id]
 }
