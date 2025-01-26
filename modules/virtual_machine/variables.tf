@@ -5,6 +5,12 @@ variable "resource_group_name" {
   type        = string
 }
 
+variable "vm_count" {
+  description = "Number of VMs to create"
+  type        = number
+  default     = 3
+}
+
 variable "location" {
   description = "The location where the VM will be created"
   type        = string
