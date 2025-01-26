@@ -1,3 +1,3 @@
-storage_account_name = "yourstorageaccountname"
-container_name = "yourcontainername"
+storage_account_name = "npctfjbstate"
+container_name = "tfstate"
 key = "terraform.tfstate"
