@@ -60,7 +60,7 @@ resource "azurerm_network_interface" "vmr" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.sub1.id
+    subnet_id                     = subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
