@@ -11,7 +11,3 @@ module "vms" {
   subnet_name         = var.subnet_name
   location            = var.location
 }
-
-output "vm_ids" {
-  value = module.vms.vm_ids
-}
