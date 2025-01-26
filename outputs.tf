@@ -12,6 +12,6 @@ output "subnet_id" {
 
 # Output the Network Interface IDs
 output "network_interface_ids" {
+  description = "List of network interface IDs"
   value = module.network_interface.network_interface_ids
-  description = "List of Network Interface IDs"
 }
