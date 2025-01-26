@@ -37,6 +37,12 @@ resource "azurerm_virtual_machine" "vmr" {
   }
 }
 
+data "azurerm_subnet" "sub1" {
+  name                 = "snet-qch-t1-mgmt-01"
+  virtual_network_name = "VNET-QCH-HUB-01"
+  resource_group_name  = "RG-QCH-JB-001" // Replace with your resource group name
+}
+
 resource "azurerm_network_interface" "vmr" {
   count               = 6
   name                = "QCH-MGMT-JB-T1-nic-${count.index + 1}"
@@ -50,8 +56,4 @@ resource "azurerm_network_interface" "vmr" {
   }
 }
 
-data "azurerm_subnet" "sub1" {
-  name                 = "snet-qch-t1-mgmt-01"
-  virtual_network_name = "VNET-QCH-HUB-01"
-  resource_group_name  = "RG-QCH-JB-001" // Replace with your resource group name
-}
+
