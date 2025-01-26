@@ -1,69 +1,39 @@
+# Provider configuration for Azure
 provider "azurerm" {
   features {}
-  subscription_id = "60f6a19f-76bd-46af-b5fd-e25ff391ef6e"
+  subscription_id = var.subscription_id  # Subscription ID passed as a variable for flexibility
 }
 
-resource "azurerm_virtual_machine" "vmr" {
-  count                = 3
-  name                 = "QCH-MGMT-JB-T1-${count.index + 1}"
-  location             = "Qatar Central"
-  resource_group_name  = "RG-QCH-JB-001" // Replace with your resource group name
-  network_interface_ids = [
-    azurerm_network_interface.vmr[count.index].id
-  ]
-  vm_size              = "Standard_B2ms"
-
-  storage_os_disk {
-    name              = "vmr_os_disk_${count.index + 1}"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-
-  storage_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2019-Datacenter"
-    version   = "latest"
-  }
-
-  os_profile {
-    computer_name  = "QCH-MGMT-JB-T1-${count.index + 1}"
-    admin_username = "azadmin" // Replace with your admin username
-    admin_password = "Qatar@2025" // Replace with your admin password
-  }
-
-  os_profile_windows_config {
-    provision_vm_agent = true
-  }
-}
-
+# Fetch existing Virtual Network and Subnet using Data Sources
 data "azurerm_virtual_network" "existing_vnet" {
-  name                = "VNET-QCH-HUB-01"
-  resource_group_name = "RG-QCH-JB-001"
+  name                = var.vnet_name        # Name of the existing Virtual Network
+  resource_group_name = var.resource_group_name  # Resource group where the VNet resides
 }
 
-data "azurerm_subnet" "sub1" {
-  name                 = "snet-qch-t1-mgmt-01"
+data "azurerm_subnet" "existing_subnet" {
+  name                 = var.subnet_name     # Name of the existing subnet
   virtual_network_name = data.azurerm_virtual_network.existing_vnet.name
-  resource_group_name  = data.azurerm_virtual_network.existing_vnet.resource_group_name
+  resource_group_name  = var.resource_group_name
 }
 
-output "subnet_id" {
-  value = data.azurerm_subnet.sub1.id
+# Module for Network Interface configuration
+module "network_interface" {
+  source               = "./modules/network_interface"
+  count                = var.nic_count  # Dynamically create the desired number of NICs
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  subnet_id            = data.azurerm_subnet.existing_subnet.id  # Using existing subnet
 }
 
-resource "azurerm_network_interface" "vmr" {
-  count               = 3
-  name                = "QCH-MGMT-JB-T1-nic-${count.index + 1}"
-  location            = "Qatar Central"
-  resource_group_name = "RG-QCH-JB-001" // Replace with your resource group name
-
-  ip_configuration {
-    name                          = "internal"
-    subnet_id                     = "/subscriptions/60f6a19f-76bd-46af-b5fd-e25ff391ef6e/resourceGroups/RG-QCH-JB-001/providers/Microsoft.Network/virtualNetworks/VNET-QCH-HUB-01/subnets/snet-qch-t1-mgmt-01"
-    private_ip_address_allocation = "Dynamic"
-  }
+# Module for Virtual Machine configuration
+module "virtual_machine" {
+  source               = "./modules/virtual_machine"
+  count                = var.vm_count  # Dynamically create the desired number of VMs
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  vm_size              = var.vm_size
+  admin_username       = var.admin_username
+  admin_password       = var.admin_password
+  network_interface_ids = module.network_interface.network_interface_ids  # Passing NIC IDs to VMs
+  vm_name_prefix       = var.vm_name_prefix
 }
-
-
