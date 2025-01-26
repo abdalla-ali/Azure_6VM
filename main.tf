@@ -22,7 +22,7 @@ resource "azurerm_virtual_machine" "vmr" {
   os_profile {
     computer_name  = "QCH-MGMT-JB-T1-${count.index + 1}"
     admin_username = "azadmin" // Replace with your admin username
-    admin_password = "Qtar@2025" // Replace with your admin password
+    admin_password = "Qatar@2025" // Replace with your admin password
   }
 
   os_profile_windows_config {
@@ -41,7 +41,7 @@ resource "azurerm_network_interface" "vmr" {
   count               = 6
   name                = "QCH-MGMT-JB-T1-nic-${count.index + 1}"
   location            = "Qatar Central"
-  resource_group_name = "your_resource_group_name" // Replace with your resource group name
+  resource_group_name = "RG-QCH-JB-001" // Replace with your resource group name
 
   ip_configuration {
     name                          = "internal"
