@@ -48,6 +48,10 @@ data "azurerm_subnet" "sub1" {
   resource_group_name  = data.azurerm_virtual_network.existing_vnet.resource_group_name
 }
 
+output "subnet_id" {
+  value = data.azurerm_subnet.sub1.id
+}
+
 resource "azurerm_network_interface" "vmr" {
   count               = 6
   name                = "QCH-MGMT-JB-T1-nic-${count.index + 1}"
