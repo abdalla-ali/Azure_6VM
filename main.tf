@@ -33,7 +33,10 @@ module "virtual_machine" {
   vm_size             = var.vm_size
   admin_username      = var.admin_username
   admin_password      = var.admin_password
-  network_interface_ids = module.network_interface.network_interface_ids  # Passing NIC IDs to VMs
+  
+  # Flatten the list of network interfaces and pass the NIC IDs to the VM
+  network_interface_ids = flatten([for ni in module.network_interface : ni.network_interface_id])
+
   vm_name_prefix      = var.vm_name_prefix
 }
 
