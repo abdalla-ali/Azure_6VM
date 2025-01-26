@@ -4,7 +4,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_virtual_machine" "vmr" {
-  count                = 6
+  count                = 3
   name                 = "QCH-MGMT-JB-T1-${count.index + 1}"
   location             = "Qatar Central"
   resource_group_name  = "RG-QCH-JB-001" // Replace with your resource group name
@@ -54,7 +54,7 @@ output "subnet_id" {
 }
 
 resource "azurerm_network_interface" "vmr" {
-  count               = 6
+  count               = 3
   name                = "QCH-MGMT-JB-T1-nic-${count.index + 1}"
   location            = "Qatar Central"
   resource_group_name = "RG-QCH-JB-001" // Replace with your resource group name
