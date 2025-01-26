@@ -1,4 +1,4 @@
-variable "count" {
+variable "nic_count" {
   type        = number
   description = "Number of Network Interfaces to create"
 }
