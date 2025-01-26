@@ -27,13 +27,13 @@ module "network_interface" {
 
 # Module for Virtual Machine configuration
 module "virtual_machine" {
-  source               = "./modules/virtual_machine"
-  count                = var.vm_count  # Dynamically create the desired number of VMs
-  resource_group_name  = var.resource_group_name
-  location             = var.location
-  vm_size              = var.vm_size
-  admin_username       = var.admin_username
-  admin_password       = var.admin_password
+  source              = "./modules/virtual_machine"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  vm_size             = var.vm_size
+  admin_username      = var.admin_username
+  admin_password      = var.admin_password
   network_interface_ids = module.network_interface.network_interface_ids  # Passing NIC IDs to VMs
-  vm_name_prefix       = var.vm_name_prefix
+  vm_name_prefix      = var.vm_name_prefix
 }
+

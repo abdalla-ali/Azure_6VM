@@ -1,10 +1,11 @@
-# Virtual Machine resource
-resource "azurerm_virtual_machine" "vm" {
-  count                = var.count  # Create the number of VMs as specified
-  name                 = "${var.vm_name_prefix}-${count.index + 1}"  # VM names (e.g., vm-1, vm-2)
+# modules/virtual_machine/main.tf
+
+resource "azurerm_virtual_machine" "vmr" {
+  count                = var.vm_count
+  name                 = "${var.vm_name_prefix}-${count.index + 1}"
   location             = var.location
   resource_group_name  = var.resource_group_name
-  network_interface_ids = var.network_interface_ids  # Attach the NICs to the VMs
+  network_interface_ids = var.network_interface_ids  # Using the NIC IDs passed from the parent module
   vm_size              = var.vm_size
 
   storage_os_disk {
@@ -30,8 +31,4 @@ resource "azurerm_virtual_machine" "vm" {
   os_profile_windows_config {
     provision_vm_agent = true
   }
-}
-
-output "vm_names" {
-  value = azurerm_virtual_machine.vm[*].name
 }
