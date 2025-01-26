@@ -4,9 +4,9 @@ provider "azurerm" {
 
 resource "azurerm_virtual_machine" "vmr" {
   count                = 6
-  name                 = "vmr-${count.index + 1}"
+  name                 = "QCH-MGMT-JB-T1-${count.index + 1}"
   location             = "Qatar Central"
-  resource_group_name  = "your_resource_group_name" // Replace with your resource group name
+  resource_group_name  = "RG-QCH-JB-001" // Replace with your resource group name
   network_interface_ids = [
     azurerm_network_interface.vmr[count.index].id
   ]
@@ -20,9 +20,9 @@ resource "azurerm_virtual_machine" "vmr" {
   }
 
   os_profile {
-    computer_name  = "vmr-${count.index + 1}"
-    admin_username = "adminuser" // Replace with your admin username
-    admin_password = "Password1234!" // Replace with your admin password
+    computer_name  = "QCH-MGMT-JB-T1-${count.index + 1}"
+    admin_username = "azadmin" // Replace with your admin username
+    admin_password = "Qtar@2025" // Replace with your admin password
   }
 
   os_profile_windows_config {
@@ -39,7 +39,7 @@ resource "azurerm_virtual_machine" "vmr" {
 
 resource "azurerm_network_interface" "vmr" {
   count               = 6
-  name                = "vmr-nic-${count.index + 1}"
+  name                = "QCH-MGMT-JB-T1-nic-${count.index + 1}"
   location            = "Qatar Central"
   resource_group_name = "your_resource_group_name" // Replace with your resource group name
 
@@ -51,7 +51,7 @@ resource "azurerm_network_interface" "vmr" {
 }
 
 data "azurerm_subnet" "sub1" {
-  name                 = "sub1"
-  virtual_network_name = "vnet1"
-  resource_group_name  = "your_resource_group_name" // Replace with your resource group name
+  name                 = "snet-qch-t1-mgmt-01"
+  virtual_network_name = "VNET-QCH-HUB-01"
+  resource_group_name  = "RG-QCH-JB-001" // Replace with your resource group name
 }
