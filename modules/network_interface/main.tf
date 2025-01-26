@@ -11,8 +11,3 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_allocation = "Dynamic"  # Dynamic private IP allocation
   }
 }
-
-# Output the Network Interface IDs
-output "network_interface_ids" {
-  value = azurerm_network_interface.nic[*].id
-}
