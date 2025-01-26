@@ -34,14 +34,14 @@ variable "location" {
 variable "nic_count" {
   type        = number
   description = "The number of Network Interfaces to create"
-  default     = 1
+  default     = 3
 }
 
 # Number of Virtual Machines to create
 variable "vm_count" {
   type        = number
   description = "The number of Virtual Machines to create"
-  default     = 1
+  default     = 3
 }
 
 # Size of the Virtual Machines (e.g., Standard_B2ms)

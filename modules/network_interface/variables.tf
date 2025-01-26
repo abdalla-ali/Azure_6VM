@@ -1,4 +1,5 @@
 variable "nic_count" {
+  description = "Number of network interfaces to create"
   type        = number
   description = "Number of Network Interfaces to create"
 }
