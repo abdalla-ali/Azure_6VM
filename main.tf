@@ -11,7 +11,7 @@ resource "azurerm_virtual_machine" "vmr" {
   network_interface_ids = [
     azurerm_network_interface.vmr[count.index].id
   ]
-  vm_size              = "Standard_D4d_v4"
+  vm_size              = "D2_v2_Promo"
 
   storage_os_disk {
     name              = "vmr_os_disk_${count.index + 1}"
