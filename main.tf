@@ -19,6 +19,13 @@ resource "azurerm_virtual_machine" "vmr" {
     managed_disk_type = "Standard_LRS"
   }
 
+  storage_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2019-Datacenter"
+    version   = "latest"
+  }
+
   os_profile {
     computer_name  = "QCH-MGMT-JB-T1-${count.index + 1}"
     admin_username = "azadmin" // Replace with your admin username
@@ -27,13 +34,6 @@ resource "azurerm_virtual_machine" "vmr" {
 
   os_profile_windows_config {
     provision_vm_agent = true
-  }
-
-  source_image_reference {
-    publisher = "MicrosoftWindowsServer"
-    offer     = "WindowsServer"
-    sku       = "2022-Datacenter"
-    version   = "latest"
   }
 }
 
