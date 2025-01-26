@@ -60,7 +60,7 @@ resource "azurerm_network_interface" "vmr" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = subnet_id
+    subnet_id                     = "/subscriptions/60f6a19f-76bd-46af-b5fd-e25ff391ef6e/resourceGroups/RG-QCH-JB-001/providers/Microsoft.Network/virtualNetworks/VNET-QCH-HUB-01/subnets/snet-qch-t1-mgmt-01"
     private_ip_address_allocation = "Dynamic"
   }
 }
