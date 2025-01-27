@@ -13,5 +13,5 @@ output "subnet_id" {
 # Output the Network Interface IDs
 output "network_interface_ids" {
   description = "List of network interface IDs"
-  value = network_interface.nic[*].id
+  value = network_interface.network_interface_ids[*].id
 }
