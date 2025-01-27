@@ -2,6 +2,6 @@
 
 output "network_interface_ids" {
   description = "List of network interface IDs"
-  value = flatten([for ni in azurerm_network_interface.nic : ni.id])
+  value = azurerm_network_interface.nic[count.index].id
 }
 
